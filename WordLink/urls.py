@@ -1,8 +1,8 @@
 from . import views
-from django.urls import path
+from django.urls import path,re_path
 
 urlpatterns =[
-    path('Word_Link.html', views.Word_Link),
-    path('Word_Link_Result.html', views.Word_Link_Result)
 
+    re_path(r'^Word_Link.html.*', views.Word_Link),
+    path('Word_Link_Result.html', views.Word_Link_Result)
 ]

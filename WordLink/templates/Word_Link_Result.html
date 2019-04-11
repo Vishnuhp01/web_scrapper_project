@@ -1,14 +1,349 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Word Link</title>
-</head>
-<body>
+<html>
+    <head>
 
-    {% for links in results %}
-        <div>{{ links }}</div>
-    {% endfor %}
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lilita+One">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Dosis">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title> Word Link Result </title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static "WordLink/Treant.css" %}">
+        {% load static %}
+{#    <link rel="stylesheet" href="{% static "WordLink/basic-example.css" %}">#}
+    <style>
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { margin:0; padding:0; }
+        table { border-collapse:collapse; border-spacing:0; }
+        fieldset,img { border:0; }
+        address,caption,cite,code,dfn,em,strong,th,var { font-style:normal; font-weight:normal; }
+        caption,th { text-align:left; }
+        h1,h2,h3,h4,h5,h6 { font-size:100%; font-weight:normal; }
+        q:before,q:after { content:''; }
+        abbr,acronym { border:0; }
+
+        body { background: #fff; }
+        /* optional Container STYLES */
+        .chart { height: auto;width: auto; margin: 5px;}
+        .Treant > .node {  }
+        .Treant > p { font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: bold; font-size: 12px; }
+        .node-name { font-weight: bold;}
+        path{
+            border-color: white;
+            color: white;
+            stroke: white;
+        }
+        .nodeExample1 {
+            padding: 2px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background-color: rgba(153, 52, 52, 0);
+            border: 1px solid white;
+            width: auto;
+            font-family: Tahoma;
+            font-size: 12px;
+        }
+        .innercontent{
+            margin: 8px;
+        }
+        .nodeExample1 img {
+            margin-right:  10px;
+        }
+        .container-fluid{
+            position: relative;
+            top: 0px;
+            padding: 0px;
+        }
+
+        body,html {
+
+
+            color: white;
+            font-family: 'Dosis',Serif;
+            /* Full height */
+            height: 100%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        a{
+            color: khaki;
+        }
+        nav{font-size:1.05em;width:100%;height:70px;background: #a1352c;text-align:center;line-height:70px;font-family:'Lato',Serif;font-weight:800;position:fixed;top:0;z-index:10;}
+nav.opaque{background-color:#444;}
+nav>ul{margin:0;padding:0;list-style:none;}
+nav>ul>li{display:inline;}
+nav a{color:#f1f1f1;text-decoration:none;padding:5px 10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-transition:all .3s ease;-o-transition:all .3s ease;transition:all .3s ease;}
+{#nav li:hover{border-bottom:3px solid rgba(255,255,255,0.8);}#}
+nav>ul>li:nth-child(1n+2):before{content:'|';width:1px;margin:0 10px;opacity:0.25;}
+
+    </style>
+</head>
+{% load static %}
+<body style="background-image: url({% static "WordLink/black.jpg"%})">
+    <div class="container-fluid">
+    <nav class="row top navbar navbar-expand-lg justify-content-between" style="margin: 0px">
+{#        <span><a href="{% static "http://127.0.0.1:8000/home/index.html" %}"><img src="{% static "home/logo.png" %}" height="50px" width="50px" style="float: left;padding-top: 12px;padding-left: 12px;"></a>#}
+
+        <a class="navbar-brand" href="http://127.0.0.1:8000/home/index.html"><img src="{% static "home/logo.png" %}" style="width: 50px;height: 50px;"></a>
+
+        <ul class="navbar-nav">
+
+            <li><a href="http://127.0.0.1:8000/home/index.html#section1" class="smoothscroll">About Us</a></li>
+            <li><a href="http://127.0.0.1:8000/home/index.html#section2" class="smoothscroll">Basic Scrapping</a></li>
+            <li><a href="http://127.0.0.1:8000/home/index.html#section3" class="smoothscroll">Email Gathering</a></li>
+            <li><a href="http://127.0.0.1:8000/home/index.html#section4" class="smoothscroll">Word Link</a></li>
+{#            <li><a href="#section5" class="smoothscroll">Section 5</a></li>#}
+{#            <li><a href="#section6" class="smoothscroll">Section 6</a></li>#}
+        </ul>
+        {% if logged%}
+        <div>
+            <input class="btn btn-outline-warning" type="button" name="login" value="{{ username }}" onclick="profile()">
+            <input type="hidden" name="username" value={{ username }}>
+            <script>
+                function profile() {
+                    document.cookie="username={{ username }}"
+                    window.location.href="http://127.0.0.1:8000/home/profile.html";
+
+                }
+            </script>
+
+        </div>
+        {% else %}
+        <div>
+            <input class="btn btn-outline-warning" type="button" name="log-in" value="log-in" onclick="login()">
+            <script>
+                function login() {
+                    window.location.href="http://127.0.0.1:8000/home/login.html";
+                }
+            </script>
+            <input class="btn btn-outline-warning" type="button" name="sign-up" value="sign-up" onclick="signup()">
+            <script>
+                function signup() {
+                    window.location.href="http://127.0.0.1:8000/home/signup.html";
+                }
+            </script>
+        </div>
+
+        {% endif %}
+
+
+
+    </nav>
+        <div class="chart" id="basic-example" style="margin-top: 150px"></div>
+            {% load static %}
+            <script src="{% static "WordLink/raphael.js" %}"></script>
+            {% load static %}
+            <script src="{% static "WordLink/Treant.js" %}"></script>
+
+            <script>
+
+                var config = {
+                    container: "#basic-example",
+
+                    connectors: {
+                        type: 'step'
+                    },
+                    node: {
+                        HTMLclass: 'nodeExample1'
+                    }
+                },
+                w_search = {
+
+
+
+
+                    innerHTML: `
+                            <a href="{{ zeroth }}">{{ zeroth_heading }}</a>
+
+                    `,
+
+                },
+
+                l1_c1 = {
+
+                   parent: w_search,
+                   stackChildren: true,
+
+                   innerHTML: `
+                                <a href="{{ first }}">{{ first_heading}}</a>
+
+                    `,
+
+
+
+                },
+                l1_c2 = {
+                   stackChildren:true,
+                   parent: w_search,
+
+
+                   innerHTML: `
+                            <a href="{{ second }}">{{ second_heading}}</a>
+
+                    `,
+
+
+                },
+                l1_c3 = {
+                   stackChildren:true,
+
+                   parent: w_search,
+
+
+                   innerHTML: `
+                            <a href="{{ third }}">{{ third_heading}}</a>
+
+                    `,
+
+
+                },
+                l1_c4 = {
+                   stackChildren:true,
+
+                   parent: w_search,
+
+
+                   innerHTML: `
+                            <a href="{{ fourth }}">{{ fourth_heading}}</a>
+
+                    `,
+
+
+                },
+                l1_c5 = {
+                   stackChildren:true,
+                   parent: w_search,
+
+
+                   innerHTML: `
+                            <a href="{{ fifth }}">{{ fifth_heading}}</a>
+
+                    `,
+
+
+                },
+                l2_c1={
+                    parent:l1_c1,
+                    innerHTML:`
+                    <div class="innercontent" style="margin-left:17px;"">
+                        <br>
+                        <ul>
+                            {% for head in list_link_1 %}
+
+                                <li><a href="https://en.wikipedia.org/wiki/{{ head }}">{{ head }}</a></li><br>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    `,
+                },
+                l2_c2={
+                    parent:l1_c2,
+                    innerHTML:`
+                    <div class="innercontent" style="margin-left:17px;">
+                    <br>
+                        <ul>
+                            {% for head in list_link_2 %}
+
+                                <li><a href="https://en.wikipedia.org/wiki/{{ head }}">{{ head }}</a></li><br>
+                            {% endfor %}
+
+                        </ul>
+                        </div>
+                    `,
+                },
+                l2_c3={
+                    parent:l1_c3,
+                    innerHTML:`
+                    <div class="innercontent" style="margin-left:17px;">
+                    <br>
+                        <ul>
+                            {% for head in list_link_3 %}
+
+                                <li><a href="https://en.wikipedia.org/wiki/{{ head }}">{{ head }}</a></li><br>
+                            {% endfor %}
+
+                        </ul>
+                        </div>
+                    `,
+                },
+                l2_c4={
+                    parent:l1_c4,
+                    innerHTML:`
+                    <div class="innercontent" style="margin-left:17px;">
+                    <br>
+                        <ul>
+                            {% for head in list_link_4 %}
+
+                                <li><a href="https://en.wikipedia.org/wiki/{{ head }}">{{ head }}</a></li><br>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    `,
+                },
+                l2_c5={
+                    parent:l1_c5,
+                    innerHTML:`
+                    <div class="innercontent" style="margin-left:17px;">
+                    <br>
+                        <ul>
+                            {% for head in list_link_5 %}
+
+                                <li><a href="https://en.wikipedia.org/wiki/{{ head }}">{{ head }}</a></li><br>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    `,
+                }
+
+
+
+
+
+
+
+
+
+                chart_config = [
+                    config,
+                    w_search,
+                    l1_c1,
+                    l1_c2,
+                    l1_c3,
+                    l1_c4,
+                    l1_c5,
+                    l2_c1,
+                    l2_c2,
+                    l2_c3,
+                    l2_c4,
+                    l2_c5
+
+                ];
+
+
+
+            </script>
+            <script>
+                new Treant( chart_config );
+            </script>
+
+    </div>
 
 </body>
 </html>
